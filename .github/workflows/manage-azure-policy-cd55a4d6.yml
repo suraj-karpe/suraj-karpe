@@ -1,0 +1,84 @@
+name: manage-azure-policy-cd55a4d6
+on:
+  workflow_dispatch:
+    inputs:
+      remarks:
+        description: 'Reason for triggering the workflow run'
+        required: false
+        default: 'Updating Azure Policies'
+
+
+## Uncomment the following if you wish to automatically trigger workflow run with every commit
+#
+#  push:
+#    paths:
+#      - 'policies/Storage_account_keys_should_not_be_expired_044985bb-afe1-42cd-8a36-9d5d42424537/**'
+#      - 'policies/Application_Insights_components_with_Private_Link_enabled_should_use_Bring_Your_Own_Storage_accounts_for_profiler_and_debugger._0c4bd2e8-8872-4f37-a654-03f6f38ddc76/**'
+#      - 'policies/Storage_accounts_should_restrict_network_access_using_virtual_network_rules_2a1a9cdf-e04d-429a-8416-3bfb72a1b26f/**'
+#      - 'policies/Deploy_Advanced_Threat_Protection_on_storage_accounts_361c2074-3595-4e5d-8cab-4f21dffc835c/**'
+#      - 'policies/Storage_accounts_should_restrict_network_access_34c877ad-507e-4c82-993e-3452a6e0ad3c/**'
+#      - 'policies/Storage_accounts_should_be_migrated_to_new_Azure_Resource_Manager_resources_37e0d2fe-28a5-43d6-a273-67d37d1f5606/**'
+#      - 'policies/Secure_transfer_to_storage_accounts_should_be_enabled_404c3081-a854-4457-ae30-26a93ef643f9/**'
+#      - 'policies/Storage_accounts_should_have_infrastructure_encryption_4733ea7b-a883-42fe-8cac-97454c2a9e4a/**'
+#      - 'policies/_Preview_Storage_account_public_access_should_be_disallowed_4fa4b6c0-31ca-4c0d-b10d-24b96f62a751/**'
+#      - 'policies/Synapse_workspaces_with_SQL_auditing_to_storage_account_destination_should_be_configured_with_90_days_retention_or_higher_529ea018-6afc-4ed4-95bd-7c9ee47b00bc/**'
+#      - 'policies/Storage_Accounts_should_use_a_virtual_network_service_endpoint_60d21c4f-21a3-4d94-85f4-b924e6aeeda4/**'
+#      - 'policies/Storage_accounts_should_use_private_link_6edd7eda-6dd8-40f7-810d-67160c639cd9/**'
+#      - 'policies/Configure_diagnostic_settings_for_storage_accounts_to_Log_Analytics_workspace_6f8f98a4-f108-47cb-8e98-91a0d85cd474/**'
+#      - 'policies/Storage_accounts_should_use_customer-managed_key_for_encryption_6fac406b-40ca-413b-bf8e-0bf964659c25/**'
+#      - 'policies/Workbooks_should_be_saved_to_storage_accounts_that_you_control_6fc8115b-2008-441f-8c61-9b722c1e537f/**'
+#      - 'policies/Storage_accounts_should_be_limited_by_allowed_SKUs_7433c107-6db4-4ad1-b57a-a76dce0154a1/**'
+#      - 'policies/SQL_servers_with_auditing_to_storage_account_destination_should_be_configured_with_90_days_retention_or_higher_89099bee-89e0-4b26-a5f4-165451757743/**'
+#      - 'policies/Storage_accounts_should_prevent_shared_key_access_8c6a50c6-9ffd-4ae7-986f-5fa6111f9a54/**'
+#      - 'policies/Storage_accounts_should_prevent_cross_tenant_object_replication_92a89a79-6c52-4a7e-a03f-61306fc49312/**'
+#      - 'policies/Configure_Storage_account_to_use_a_private_link_connection_9f766f00-8d11-464e-80e1-4091d7874074/**'
+#      - 'policies/Storage_account_encryption_scopes_should_use_customer-managed_keys_to_encrypt_data_at_rest_b5ec538c-daa0-4006-8596-35468b9148e8/**'
+#      - 'policies/Geo-redundant_storage_should_be_enabled_for_Storage_Accounts_bf045164-79ba-4215-8f95-f8048dc1780b/**'
+#      - 'policies/Storage_account_encryption_scopes_should_use_double_encryption_for_data_at_rest_bfecdea6-31c4-4045-ad42-71b9dc87247d/**'
+#      - 'policies/Storage_accounts_should_allow_access_from_trusted_Microsoft_services_c9d007d0-c057-4772-b18c-01e546713bcd/**'
+#      - 'policies/Storage_account_containing_the_container_with_activity_logs_must_be_encrypted_with_BYOK_fbb99e8e-e444-4da0-9ff1-75c92f5a85b2/**'
+#      - 'policies/Saved-queries_in_Azure_Monitor_should_be_saved_in_customer_storage_account_for_logs_encryption_fa298e57-9444-42ba-bf04-86e8470e32c7/**'
+#      - 'policies/Application_definition_for_Managed_Application_should_use_customer_provided_storage_account_9db7917b-1607-4e7d-a689-bca978dd0633/**'
+#      - .github/workflows/manage-azure-policy-cd55a4d6.yml
+jobs:
+  apply-azure-policy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Login to Azure
+      uses: azure/login@v1
+      with:
+        creds: ${{secrets.AZURE_CREDENTIALS_cd55a4d6}}
+        allow-no-subscriptions: true
+    - name: Create or Update Azure Policies
+      uses: azure/manage-azure-policy@v0
+      with:
+        paths: |
+          policies/Storage_account_keys_should_not_be_expired_044985bb-afe1-42cd-8a36-9d5d42424537/**
+          policies/Application_Insights_components_with_Private_Link_enabled_should_use_Bring_Your_Own_Storage_accounts_for_profiler_and_debugger._0c4bd2e8-8872-4f37-a654-03f6f38ddc76/**
+          policies/Storage_accounts_should_restrict_network_access_using_virtual_network_rules_2a1a9cdf-e04d-429a-8416-3bfb72a1b26f/**
+          policies/Deploy_Advanced_Threat_Protection_on_storage_accounts_361c2074-3595-4e5d-8cab-4f21dffc835c/**
+          policies/Storage_accounts_should_restrict_network_access_34c877ad-507e-4c82-993e-3452a6e0ad3c/**
+          policies/Storage_accounts_should_be_migrated_to_new_Azure_Resource_Manager_resources_37e0d2fe-28a5-43d6-a273-67d37d1f5606/**
+          policies/Secure_transfer_to_storage_accounts_should_be_enabled_404c3081-a854-4457-ae30-26a93ef643f9/**
+          policies/Storage_accounts_should_have_infrastructure_encryption_4733ea7b-a883-42fe-8cac-97454c2a9e4a/**
+          policies/_Preview_Storage_account_public_access_should_be_disallowed_4fa4b6c0-31ca-4c0d-b10d-24b96f62a751/**
+          policies/Synapse_workspaces_with_SQL_auditing_to_storage_account_destination_should_be_configured_with_90_days_retention_or_higher_529ea018-6afc-4ed4-95bd-7c9ee47b00bc/**
+          policies/Storage_Accounts_should_use_a_virtual_network_service_endpoint_60d21c4f-21a3-4d94-85f4-b924e6aeeda4/**
+          policies/Storage_accounts_should_use_private_link_6edd7eda-6dd8-40f7-810d-67160c639cd9/**
+          policies/Configure_diagnostic_settings_for_storage_accounts_to_Log_Analytics_workspace_6f8f98a4-f108-47cb-8e98-91a0d85cd474/**
+          policies/Storage_accounts_should_use_customer-managed_key_for_encryption_6fac406b-40ca-413b-bf8e-0bf964659c25/**
+          policies/Workbooks_should_be_saved_to_storage_accounts_that_you_control_6fc8115b-2008-441f-8c61-9b722c1e537f/**
+          policies/Storage_accounts_should_be_limited_by_allowed_SKUs_7433c107-6db4-4ad1-b57a-a76dce0154a1/**
+          policies/SQL_servers_with_auditing_to_storage_account_destination_should_be_configured_with_90_days_retention_or_higher_89099bee-89e0-4b26-a5f4-165451757743/**
+          policies/Storage_accounts_should_prevent_shared_key_access_8c6a50c6-9ffd-4ae7-986f-5fa6111f9a54/**
+          policies/Storage_accounts_should_prevent_cross_tenant_object_replication_92a89a79-6c52-4a7e-a03f-61306fc49312/**
+          policies/Configure_Storage_account_to_use_a_private_link_connection_9f766f00-8d11-464e-80e1-4091d7874074/**
+          policies/Storage_account_encryption_scopes_should_use_customer-managed_keys_to_encrypt_data_at_rest_b5ec538c-daa0-4006-8596-35468b9148e8/**
+          policies/Geo-redundant_storage_should_be_enabled_for_Storage_Accounts_bf045164-79ba-4215-8f95-f8048dc1780b/**
+          policies/Storage_account_encryption_scopes_should_use_double_encryption_for_data_at_rest_bfecdea6-31c4-4045-ad42-71b9dc87247d/**
+          policies/Storage_accounts_should_allow_access_from_trusted_Microsoft_services_c9d007d0-c057-4772-b18c-01e546713bcd/**
+          policies/Storage_account_containing_the_container_with_activity_logs_must_be_encrypted_with_BYOK_fbb99e8e-e444-4da0-9ff1-75c92f5a85b2/**
+          policies/Saved-queries_in_Azure_Monitor_should_be_saved_in_customer_storage_account_for_logs_encryption_fa298e57-9444-42ba-bf04-86e8470e32c7/**
+          policies/Application_definition_for_Managed_Application_should_use_customer_provided_storage_account_9db7917b-1607-4e7d-a689-bca978dd0633/**
